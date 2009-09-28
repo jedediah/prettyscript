@@ -78,6 +78,7 @@ of code embedded in HTML, and other wonderful features.
   flexible so you can plug in your object protocol of choice.
 * Multiple rescue clauses, filter by exception type, rescue for def
 * Make all statements usable as expressions
+* Refactor refactor refactor! Use visitor pattern. Clean up this mess.
 * Multiple assignment
 * Do something about $ in identifiers. Modifying the Ruby grammar is one
   possibility.
