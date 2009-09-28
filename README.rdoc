@@ -43,12 +43,12 @@ Notice a few things:
   (but the parser treats them a bit differently, so be careful).
 * Woot.dingus is not a call in JS, it's just a property reference.
   Ruby method calls are translated to JS function calls if they have
-  arguments or if the call is parenthesized e.g. +foo()+, otherwise
+  arguments or if the call is parenthesized e.g. foo(), otherwise
   they become variable/property references.
 * +this+ is used instead of +self+. PrettyScript tries to look like
   JS when it otherwise doesn't matter. This also avoids name collisions.
 * Ruby global variables become normal JS variables, because JS allows
-  the $ character in identifiers. However, something like +foo.$bar+,
+  the $ character in identifiers. However, something like foo.$bar,
   which is valid in JS, will not parse in Ruby. I haven't figured out a
   solution to this yet.
 
