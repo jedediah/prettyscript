@@ -1,4 +1,4 @@
-== A wolf in sheep's clothing
+= A wolf in sheep's clothing
 
 PrettyScript is JavaScript that looks like Ruby. It's parsed as Ruby
 and then translated to JS using a set of rules. PrettyScript tries to
