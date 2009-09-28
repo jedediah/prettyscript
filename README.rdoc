@@ -1,0 +1,85 @@
+== A wolf in sheep's clothing
+
+PrettyScript is JavaScript that looks like Ruby. It's parsed as Ruby
+and then translated to JS using a set of rules. PrettyScript tries to
+preserve JS semantics while taking advantage of Ruby's syntactic sugar.
+It should be obvious to the programmer what JavaScript will be generated
+by any particular piece of PrettyScript.
+
+That said, PrettyScript uses black magic to bring a few of Ruby's basic
+language features to JavaScript, like blocks and implicit returns. Future plans
+include a modular transform system, so that further magical transformations,
+perhaps contributed by others, can be enabled and disabled per-use.
+
+== Example
+
+ Ruby                                   JavaScript
+
+ def foo a,b                            function foo(a,b) {
+   bar :x => a, :y => b do |z|            return bar({"x":a,"y":b},function(z) {
+     this.donk()                            this.donk();
+     Woot.dingus                            Woot.dingus;
+     if z                                   if (z)
+       Bloop 123                              return Bloop(123);
+     else                                   else
+       this.bleep = $zing                     return this.bleep=$zing;});}
+     end
+   end
+ end
+
+Notice a few things:
+
+* Lines are synchronized and the output is properly indented.
+  PrettyScript aims to have entirely readable output.
+* Blocks are translated to anonymous functions (yay!)
+* Statements in tail position are automatically returned,
+  even within control structures. Because not all JavaScript
+  statements have a value, this will sometimes fail, but the
+  eventual goal is to allow everything in PrettyScript to be used
+  as an expression, just like with Ruby.
+* Nothing special is done with return scope, so return in a block
+  just exits the block. This may be changed down the road.
+* Constants are treated as normal identifiers, just like methods
+  (but the parser treats them a bit differently, so be careful).
+* Woot.dingus is not a call in JS, it's just a property reference.
+  Ruby method calls are translated to JS function calls if they have
+  arguments or if the call is parenthesized e.g. foo(), otherwise
+  they become variable/property references.
+* 'this' is used instead of 'self'. PrettyScript tries to look like
+  JS when it otherwise doesn't matter. This also avoids name collisions.
+* Ruby global variables become normal JS variables, because JS allows
+  the $ character in identifiers. However, something like foo.$bar,
+  which is valid in JS, will not parse in Ruby. I haven't figured out a
+  solution to this yet.
+
+There are many subleties to the translation, which will eventually be
+documented in detail, but for now you'll have to experiment.
+  
+== Usage
+
+PrettyScript depends on ripper2ruby by Sven Fuchs:
+http://github.com/svenfuchs/ripper2ruby/
+
+PrettyScript adds the to_js method to node classes from ripper2ruby, so
+parse some code with call that method:
+
+ Ruby.from_ruby('def lol; end').to_js
+
+Future development will include a proper command line tool, translation
+of code embedded in HTML, and other wonderful features.
+
+== TODO
+
+* There is currently no way to declare local variables. Obviously, this is
+  top priority. I'll probably do it the same way Ruby does, by looking for
+  assignments to unqualified names and creating the variable implicitly.
+* Once that is done, I'll need to come up with a way to assign to globals.
+* Do something with class and module declarations. This will probably be
+  flexible so you can plug in your object protocol of choice.
+* Multiple rescue clauses, filter by exception type, rescue for def
+* Make all statements usable as expressions
+* Multiple assignment
+* Do something about $ in identifiers. Modifying the Ruby grammar is one
+  possibility.
+* Support splat parameter/argument
+* Support block parameters and yield
