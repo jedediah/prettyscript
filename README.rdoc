@@ -11,6 +11,13 @@ language features to JavaScript, like blocks and implicit returns. Future plans
 include a modular transform system, so that further magical transformations,
 perhaps contributed by others, can be enabled and disabled per-use.
 
+== UPDATE
+I'm exploring the idea of making minor modifications to the Ruby grammar.
+This will, for example, let me easily solve the $ problem by just getting
+rid of gvars and making $ valid in idents. I can't think of any benefits
+to retaining syntax compatibility with Ruby since the semantics are already
+radically different.
+
 == Example
 
  Ruby                                   JavaScript
