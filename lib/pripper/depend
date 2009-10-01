@@ -11,9 +11,9 @@ BISON = bison
 
 .SUFFIXES: .y
 
-src: ripper.c eventids1.c eventids2table.c
+src: pscript.c eventids1.c eventids2table.c
 
-ripper.o: ripper.c lex.c eventids1.c eventids2.c eventids2table.c \
+pscript.o: pscript.c lex.c eventids1.c eventids2.c eventids2table.c \
 	$(hdrdir)/ruby/ruby.h $(arch_hdrdir)/ruby/config.h \
 	$(hdrdir)/ruby/defines.h $(hdrdir)/ruby/intern.h \
 	$(hdrdir)/ruby/encoding.h $(hdrdir)/missing.h \
@@ -28,7 +28,7 @@ ripper.o: ripper.c lex.c eventids1.c eventids2.c eventids2table.c \
 all: check
 static: check
 
-ripper.y: $(srcdir)/tools/preproc.rb $(srcdir)/parse.y
+pscript.y: $(srcdir)/tools/preproc.rb $(srcdir)/parse.y
 	$(RUBY) $(srcdir)/tools/preproc.rb $(srcdir)/parse.y --output=$@
 
 check: $(GEN) $(SRC1) $(SRC2)
@@ -53,8 +53,8 @@ lex.c: defs/keywords
 	  $(CP) $@ $(srcdir)/lex.c.blt; \
 	fi
 
-# Entries for Ripper maintainer
+# Entries for PrettyScript maintainer
 
-preproc: ripper.E
-ripper.E: ripper.c
-	$(CC) -E $(CPPFLAGS) $(INCFLAGS) ripper.c | $(RUBY) $(srcdir)/tools/strip.rb > $@
+preproc: pscript.E
+pscript.E: pscript.c
+	$(CC) -E $(CPPFLAGS) $(INCFLAGS) pscript.c | $(RUBY) $(srcdir)/tools/strip.rb > $@

@@ -1,12 +1,12 @@
-Ripper README
+PrettyScript README
 =============
 
-  Ripper is a Ruby script parser.  You can get information
+  PrettyScript is a Ruby script parser.  You can get information
   by event-based style from the parser.
 
   !! WARNING !!
 
-  Ripper is still early-alpha version.
+  PrettyScript is still early-alpha version.
   I never assure any kind of backward compatibility.
   
 Requirements
@@ -18,7 +18,7 @@ Requirements
 Usage
 -----
 
-  See test/ripper/* and sample/ripper/*.
+  See test/pscript/* and sample/pscript/*.
 
 License
 -------
